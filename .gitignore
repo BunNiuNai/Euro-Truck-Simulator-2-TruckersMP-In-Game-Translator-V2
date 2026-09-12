@@ -7,6 +7,19 @@ dist/
 frontend/node_modules/
 frontend/dist/
 
+# 打包脚本往这三个目录里拷产物（tools/build-exe.ps1 正常结束时会清掉，
+# 只留 README.txt 占位——那是 //go:embed 的构建要件）。
+# 加这条是**安全网**：脚本中途失败会跳过清理、把产物留在树里，
+# 不忽略的话下一次 git add -A 会把可执行文件当源码提交。
+# 实测踩到过一次：2026-09-12 打包脚本的自检判断写错，Die 在清理之前。
+backend/internal/embedded/frontend/*
+backend/internal/embedded/native/*
+backend/internal/embedded/resources/*
+!backend/internal/embedded/*/README.txt
+
+# 编辑器
+.vscode/
+
 # Go 构建缓存（默认在 %LOCALAPPDATA%\go-build；沙箱环境用工作区内缓存）
 .gocache/
 

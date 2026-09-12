@@ -14,8 +14,15 @@ param(
     # 打包完把嵌进源码树的产物清掉（默认开）。用 -KeepEmbedded 保留，
     # 便于观察到底嵌进去了什么。
     [switch]$KeepEmbedded,
-    [string]$Output = ''
+    [string]$Output = '',
+    # 版本号，注入到 api.Version（见下面 -X 那段）。
+    # 留空 = 用源码里的默认值，那是**开发用**的 v2.0.0-dev。
+    [string]$Version = ''
 )
+
+# -X 要精确到「包路径.变量名」。模块名见 backend/go.mod（末尾是 /backend），
+# 路径写错时 go **不报错**，只是版本号悄悄不变——所以 build 完会回读自检。
+$ApiPkgVar = 'github.com/BunNiuNai/ets2-translator-v2/backend/internal/api.Version'
 
 $ErrorActionPreference = 'Stop'
 
@@ -84,11 +91,17 @@ if (-not $SkipBuild) {
     cmake --build $buildDir --config Release
     if ($LASTEXITCODE -ne 0) { Die 'native 构建失败' }
 
-    $built = Get-ChildItem -Path $buildDir -Recurse -Filter 'translator_native.exe' -ErrorAction SilentlyContinue |
-             Select-Object -First 1
-    if (-not $built) { Die "构建目录里找不到 translator_native.exe（$buildDir）" }
-    New-Item -ItemType Directory -Force -Path $Dist | Out-Null
-    Copy-Item $built.FullName (Join-Path $Dist 'translator_native.exe') -Force
+    # ⚠️ 产物**直接在 dist/**，不在 build/ 里：native/CMakeLists.txt:182-184 把
+    # RUNTIME_OUTPUT_DIRECTORY 指到了 ${CMAKE_SOURCE_DIR}/../dist。
+    #
+    # 这里原先是在 $buildDir 下递归找 translator_native.exe，找不到就中止——
+    # 也就是说**「不带 -SkipBuild 的完整打包」从来没成功过**。而带 -SkipBuild
+    # 时整段被跳过、直接用 dist 里已有的产物，反而没事，所以这个 bug 藏了很久。
+    $natBuilt = Join-Path $Dist 'translator_native.exe'
+    if (-not (Test-Path $natBuilt)) {
+        Die "构建后找不到 native 产物：$natBuilt`n（CMake 的输出目录见 native/CMakeLists.txt 的 RUNTIME_OUTPUT_DIRECTORY）"
+    }
+    Write-Host "  native 产物: $natBuilt ($([int]((Get-Item $natBuilt).Length / 1KB)) KB)"
 }
 
 $natExe = Join-Path $Dist 'translator_native.exe'
@@ -130,8 +143,32 @@ try {
     # 启动方式。代价是 stdout/stderr 被系统丢弃 —— 所以启动失败必须靠
     # main.go 里的 fatal() 弹系统对话框说出来，加上照常写 <数据目录>\logs\；
     # 两者缺一，「启动失败」就变成「双击了没反应」。
-    & $Go build -trimpath -ldflags '-s -w -H=windowsgui' -o $Output ./cmd/translator
+    #
+    # -X 注入版本号：api.Version 在源码里的默认值是开发用的 v2.0.0-dev。
+    # ⚠️ 包路径写错 go **不会报错**，只是版本号悄悄不变——所以下面 build 完
+    # 会用 `go version -m` 回读一次，确认 -X 真的进去了。
+    $ld = '-s -w -H=windowsgui'
+    if ($Version) {
+        if ($Version -match '\s') { Die "版本号不能含空格：'$Version'（-X 的值遇空格会被拆成两个参数）" }
+        $ld = "$ld -X $ApiPkgVar=$Version"
+    }
+    & $Go build -trimpath -ldflags $ld -o $Output ./cmd/translator
     if ($LASTEXITCODE -ne 0) { Die 'go build 失败' }
+
+    # 回读自检：-X 写错包路径时 go **静默忽略**，只能靠读产物发现。
+    #
+    # ⚠️ 判据不能用 `go version -m`：它**不记录 -ldflags**（实测确认），
+    # 拿它去找 "-X …=…" 会恒为假——初版就是这么写的，每次打包都误报失败。
+    # 改成在产物里找版本串的 UTF-8 字节：-X 注入的是字符串字面量，必然出现。
+    if ($Version) {
+        $text = [System.IO.File]::ReadAllText($Output, [System.Text.Encoding]::UTF8)
+        if (-not $text.Contains($Version)) {
+            Die "版本号注入失败：产物里找不到 '$Version'。`n请核对包路径是否与 backend/go.mod 的模块名一致（当前 $ApiPkgVar）。"
+        }
+        Write-Host "  版本号已注入：$Version" -ForegroundColor Green
+    } else {
+        Write-Host '  未指定 -Version，产物报的是源码默认值（开发用）' -ForegroundColor Yellow
+    }
 } finally { Pop-Location }
 
 # ── 5. 清场 ───────────────────────────────────────────────

@@ -23,6 +23,20 @@ if(NOT WIN32)
     message(FATAL_ERROR "translator_native 仅支持 Windows（ADR-014 / 非目标 N4）")
 endif()
 
+# ── MSVC 运行库：静态链进 EXE ──────────────────────────────────
+#
+# 默认（/MD）会把 MSVCP140.dll / VCRUNTIME140.dll 留成**运行时依赖**。
+# 那台机器上没装「VC++ 2015-2022 运行库」时，native 起不来 → 悬浮窗不出现
+# → 用户看到的是「双击了没反应」，而且没有任何错误提示（GUI 子系统丢弃
+# stdout/stderr）。而本项目的交付形态是**单个 EXE 拷到任何机器双击即用**，
+# 「我这台有、别人那台没有」这种依赖不能留。
+#
+# /MT 把运行库静态链进来，代价是 exe 大几百 KB，换掉一个静默失败模式。
+# 注意 WebView2Loader 也必须是 Static.lib（见下面），两者要一起静态。
+if(MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
+
 # ── WebView2：可选模块，SDK 不是构建硬依赖 ──────────────────────
 #
 # ADR-013 的补充决定：SDK 不得成为硬依赖，否则「装了 MSVC 就能编译」就破了。
