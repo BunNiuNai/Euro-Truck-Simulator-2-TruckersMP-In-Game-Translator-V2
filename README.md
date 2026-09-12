@@ -3,16 +3,7 @@
 Euro Truck Simulator 2 · TruckersMP 游戏内聊天翻译器 — 第二代架构。
 
 > **首要原则 P1：功能与 V1 完全一致，只更换实现。**
-> V2 的功能范围 = V1 的功能范围，不多不少。验收基线见
-> [`docs/migration-matrix.md`](docs/migration-matrix.md)（70 条 parity 能力 + 99 个测试用例 + 14 项基线指标）。
-
-## 文档
-
-| 文档 | 内容 |
-|---|---|
-| [`docs/architecture.md`](docs/architecture.md) | 架构设计 v1.3：14 条 ADR、Source/Engine/Sink 抽象、IPC 协议、API 契约 |
-| [`docs/migration-matrix.md`](docs/migration-matrix.md) | V1→V2 能力迁移对照表（验收基线） |
-| [`docs/language-assignment.md`](docs/language-assignment.md) | **逐文件语言归属判定**（读每个文件判断它干什么，再定语言） |
+> V2 的功能范围 = V1 的功能范围，不多不少。
 
 ## 技术栈与分层
 
@@ -36,7 +27,7 @@ C++ 纯 Win32 能力层             ← pipe / webview / hotkey / input / tray /
 热键解析（→ Go）、发送时序编排（→ Go）。
 
 18 个生产文件里，10 个是单一归属，**8 个需要拆分**（其中 `main.py` 拆 6 块、
-`overlay.py` 拆 5 块）。逐文件判定见 [`docs/language-assignment.md`](docs/language-assignment.md)。
+`overlay.py` 拆 5 块）。
 
 ## 目录
 

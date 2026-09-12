@@ -33,12 +33,13 @@ $Exclude = @(
 )
 
 # 例外：即使命中 $Exclude 也保留。
-# 这三份是**对外有意义的设计文档**——README 直接链了它们，不传就是 3 个死链。
-$Allow = @(
-    'docs/architecture.md',
-    'docs/language-assignment.md',
-    'docs/migration-matrix.md'
-)
+#
+# 目前**故意为空**。曾经想用它放行三份设计文档（architecture / language-assignment
+# / migration-matrix）以避免 README 里的死链，但用户明确要求：**仓库里不要任何
+# 纯文字说明性文件**，README 的链接改为不上传那三份（链接已从 README 里删掉）。
+# 机制保留，是给将来真需要"排除表误伤某个代码文件"时用的——那种情况留个口子
+# 比整条规则重写划算。加进来之前先确认它**不是文档**。
+$Allow = @()
 
 # 必须存在的文件：缺任何一个就中止。
 # 前三个 README.txt 是 //go:embed 的**占位文件**——目录为空时
@@ -54,9 +55,6 @@ $MustHave = @(
     'frontend/package.json',
     'frontend/index.html',
     'native/CMakeLists.txt',
-    'docs/architecture.md',
-    'docs/language-assignment.md',
-    'docs/migration-matrix.md',
     'tools/baseline/measure-v1.ps1',   # 曾被整目录排除误伤，钉住
     'tools/baseline/pipeline_probe.py' # 同上
 )
