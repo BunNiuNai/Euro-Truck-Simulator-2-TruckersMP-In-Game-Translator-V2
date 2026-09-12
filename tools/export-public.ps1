@@ -19,13 +19,25 @@ param(
 $ErrorActionPreference = 'Stop'
 $V2 = Split-Path -Parent $PSScriptRoot
 
-# 排除模式：匹配相对路径（PowerShell 正则，不区分大小写）
+# 排除模式：匹配相对路径（.NET 正则，不区分大小写）
+#
+# ⚠️ 教训（2026-09-12 第一次发布时踩的）：**不要用"整目录排除"**。
+# 初版写了 `^tools/baseline/`，本意是排掉那个目录下的两份 .md，
+# 结果连带把 `measure-v1.ps1`、`pipeline_probe.py` **两个脚本**一起扫掉了
+# ——"除文档外都上传"变成了"除文档外还少了两个代码文件"，而且从排除表的
+# 字面看不出这件事。现在按**文件类型**排除，不用目录。
 $Exclude = @(
-    '^docs/',                     # 全部文档
-    'README\.md$',                # 任何位置的 README.md
-    '^tools/baseline/',           # V1 基线测量工具与结果
-    '^tools/fidelity/out/',       # 生成的测量数据
-    '^native/tools/probe-logs/'   # 探测日志（15 个 0 字节文件）
+    '^docs/',                        # docs/ 下的内部记录（$Allow 里那三份除外）
+    '/README\.md$',                  # 子目录的 README.md（**根目录那份是项目门面，要发**）
+    '^tools/baseline/RESULTS-v1\.md$' # V1 基线测量报告
+)
+
+# 例外：即使命中 $Exclude 也保留。
+# 这三份是**对外有意义的设计文档**——README 直接链了它们，不传就是 3 个死链。
+$Allow = @(
+    'docs/architecture.md',
+    'docs/language-assignment.md',
+    'docs/migration-matrix.md'
 )
 
 # 必须存在的文件：缺任何一个就中止。
@@ -33,6 +45,7 @@ $Exclude = @(
 # `//go:embed all:<目录>` 会让 go build 直接失败（pattern matches no files）。
 # 它们是构建要件，不是文档，所以**不在**排除表里。
 $MustHave = @(
+    'README.md',                     # 项目门面，README 里的链接指着下面那三份
     'backend/go.mod',
     'backend/internal/embedded/frontend/README.txt',
     'backend/internal/embedded/native/README.txt',
@@ -40,7 +53,12 @@ $MustHave = @(
     'resources/dictionary.json',
     'frontend/package.json',
     'frontend/index.html',
-    'native/CMakeLists.txt'
+    'native/CMakeLists.txt',
+    'docs/architecture.md',
+    'docs/language-assignment.md',
+    'docs/migration-matrix.md',
+    'tools/baseline/measure-v1.ps1',   # 曾被整目录排除误伤，钉住
+    'tools/baseline/pipeline_probe.py' # 同上
 )
 
 # ── 1. 取跟踪文件清单 ──────────────────────────────────────
@@ -56,7 +74,8 @@ foreach ($f in $all) {
     foreach ($pat in $Exclude) {
         if ($p -match $pat) { $hit = $true; break }
     }
-    if ($hit) { $dropped += $p } else { $keep += $p }
+    # 例外表优先于排除表
+    if ($hit -and ($Allow -notcontains $p)) { $dropped += $p } else { $keep += $p }
 }
 
 # ── 2. 自检：必需文件一个都不能少 ──────────────────────────
@@ -94,5 +113,10 @@ Write-Host "导出完成：$($keep.Count) 个文件 -> $OutDir" -ForegroundColor
 Write-Host "排除：$($dropped.Count) 个文件" -ForegroundColor DarkGray
 foreach ($pat in $Exclude) {
     $n = ($dropped | Where-Object { $_ -match $pat }).Count
-    Write-Host ("  {0,-30} {1}" -f $pat, $n) -ForegroundColor DarkGray
+    Write-Host ("  {0,-34} {1}" -f $pat, $n) -ForegroundColor DarkGray
 }
+# 例外是被排除规则命中却特意保留的——单独列出来，否则"排除 N 个"这个数
+# 与"跟踪文件 − 导出文件"对不上，下次核账会以为漏了东西
+$ovr = ($all | ForEach-Object { $_ -replace '\\', '/' } | Where-Object { $Allow -contains $_ }).Count
+Write-Host "例外（命中排除表但保留）：$ovr 个" -ForegroundColor DarkGray
+$Allow | ForEach-Object { Write-Host "  $_" -ForegroundColor DarkGray }
