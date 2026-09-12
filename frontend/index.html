@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ETS2 Translator</title>
+    <script>
+      // 首屏防闪烁：主题必须在 CSS 生效前就定下来。
+      // 否则浅色配置下会先渲染一帧深色，然后才被 useTheme 纠正。
+      // 这份缓存由 useTheme.ts 写入，两个窗口同源因此共享。
+      ;(function () {
+        try {
+          var t = localStorage.getItem('ets2-theme')
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+          }
+          document.documentElement.dataset.theme = t
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark'
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+/* 基础重置与全局排版。字体与 Win11 对齐（Segoe UI Variable + 雅黑回退）。 */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  /* html 保持透明，让 native 窗口的 Mica/Acrylic 材质能透上来 */
+  background: transparent;
+  color: var(--text);
+  overflow: hidden; /* 悬浮窗自身不滚动，滚动发生在消息列表内部 */
+}
+
+body {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 1.5;
+  /* 底色带 alpha：既让材质透出来，又在没有材质时（浏览器里）仍然可读 */
+  background: var(--layer-bg);
+  /* 悬浮窗是浮在游戏上的，整窗选中文本会干扰拖拽与点击 */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 只有消息内容允许选中与复制（V1 用热键复制译文，这里保留手动选择能力） */
+.selectable {
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+/* ── 滚动条：Win11 风格（细、圆角、悬停加粗）── */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-disabled);
+  border-radius: 6px;
+  /* 用透明边框把滑块收窄，鼠标仍落在 12px 命中区内 */
+  border: 4px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+  background-clip: content-box;
+  border-width: 3px;
+}
+
+/* ── 控件基础 ── */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ── select：必须显式上色，不能只靠 color-scheme ──────────────
+ *
+ * `tokens.css` 里已经声明了 `color-scheme: dark`，理论上原生控件会跟着变深色。
+ * 但**下拉弹层是由宿主渲染的**，在 WebView2 里不保证跟随——实测用户把外观
+ * 改成深色之后，目标语言的下拉框**仍然是白的**，在深色界面里非常刺眼。
+ *
+ * 所以这里不依赖 color-scheme：给 `select` 与 `option` 都显式指定主题变量。
+ * `option` 的 background/color 在 Chromium 里对弹层有效，这是唯一可靠的办法。
+ */
+select {
+  background: var(--layer-control);
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-control);
+  padding: 4px 8px;
+}
+
+select:focus {
+  border-color: var(--accent);
+}
+
+select option {
+  background: var(--layer-solid);
+  color: var(--text);
+}
+
+/* 焦点环：Win11 用双层描边（外深内浅），保证在任何背景上都可见 */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+  border-radius: var(--radius-control);
+}
+
+/* 选中文字 */
+::selection {
+  background: var(--accent);
+  color: var(--accent-on);
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "generatedFrom": "ets2-translator/win32_constants.py",
+    "generatedAt": "2026-09-11",
+    "note": "键名映射表外置（缺陷 D7）。合并 KEY_NAME_MAP 与 SPECIAL_VK；modFlags 采 Win32 的 MOD_* 取值，其中 win 是 V2 新增（V1 的 _MOD_VK_MAP 定义了 win 但热键解析器不接受它）。"
+  },
+  "modifiers": {
+    "shift": 16,
+    "shft": 16,
+    "ctrl": 17,
+    "control": 17,
+    "alt": 18,
+    "win": 91,
+    "windows": 91
+  },
+  "keys": {
+    "enter": 13,
+    "return": 13,
+    "esc": 27,
+    "escape": 27,
+    "ctrl": 17,
+    "control": 17,
+    "tab": 9,
+    "space": 32,
+    "backspace": 8,
+    "bs": 8,
+    "delete": 46,
+    "del": 46,
+    "home": 36,
+    "end": 35,
+    "pgup": 33,
+    "pgdn": 34,
+    "left": 37,
+    "right": 39,
+    "up": 38,
+    "down": 40,
+    "insert": 45,
+    "ins": 45,
+    "f1": 112,
+    "f2": 113,
+    "f3": 114,
+    "f4": 115,
+    "f5": 116,
+    "f6": 117,
+    "f7": 118,
+    "f8": 119,
+    "f9": 120,
+    "f10": 121,
+    "f11": 122,
+    "f12": 123
+  },
+  "modFlags": {
+    "shift": 4,
+    "shft": 4,
+    "ctrl": 2,
+    "control": 2,
+    "alt": 1,
+    "win": 8,
+    "windows": 8
+  }
+}

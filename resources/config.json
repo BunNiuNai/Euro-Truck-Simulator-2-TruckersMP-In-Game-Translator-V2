@@ -1,0 +1,45 @@
+{
+  "configVersion": 1,
+  "meta": {
+    "generatedFrom": "ets2-translator/config.py:AppConfig",
+    "generatedAt": "2026-09-11",
+    "note": "V2 全新配置目录，不读 V1 配置（ADR-008）。已移除 V1 兼容字段：api_endpoint / api_key / api_model。theme 为 V2 新增字段（V1 无此配置）。"
+  },
+  "defaults": {
+    "target_language": "zh-CN",
+    "send_target_language": "en",
+    "window_opacity": 0.8,
+    "font_size": 12,
+    "max_messages": 50,
+    "player_name": "",
+    "window_mode": "standalone",
+    "click_through": false,
+    "win_x": -1,
+    "win_y": -1,
+    "win_w": 620,
+    "win_h": 360,
+    "settings_win_x": -1,
+    "settings_win_y": -1,
+    "settings_win_w": 540,
+    "settings_win_h": 700,
+    "chat_hotkey": "y",
+    "copy_hotkey": "ctrl+c",
+    "paste_hotkey": "ctrl+v",
+    "enter_hotkey": "enter",
+    "send_hotkey": "shift+y",
+    "debug_log": false,
+    "show_language_label": true,
+    "show_original_text": true,
+    "accent_color": "#3b82f6",
+    "ad_messages": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "ad_countdown": "",
+    "llm_providers": [],
+    "theme": "dark"
+  }
+}

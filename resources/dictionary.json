@@ -1,0 +1,610 @@
+{
+  "schemaVersion": 1,
+  "meta": {
+    "generatedFrom": "ets2-translator/chat_dictionary.py",
+    "generatedAt": "2026-09-11",
+    "note": "五层术语处理：slang(第1层) / phrases(第2层) / structuredActions(第3层) / promptMapping(第4层) / ets2Terms(第5层保留层)"
+  },
+  "slang": {
+    "wtf": {
+      "text": "什么鬼",
+      "pauseAfter": true
+    },
+    "wdf": {
+      "text": "什么鬼",
+      "pauseAfter": true
+    },
+    "tf": {
+      "text": "什么鬼",
+      "pauseAfter": true
+    },
+    "wth": {
+      "text": "什么鬼",
+      "pauseAfter": true
+    },
+    "wdym": {
+      "text": "你什么意思",
+      "pauseAfter": true
+    },
+    "wyd": {
+      "text": "你在干嘛",
+      "pauseAfter": true
+    },
+    "omg": {
+      "text": "天啊",
+      "pauseAfter": true
+    },
+    "ffs": {
+      "text": "真服了",
+      "pauseAfter": true
+    },
+    "lol": {
+      "text": "哈哈",
+      "pauseAfter": true
+    },
+    "lmao": {
+      "text": "哈哈",
+      "pauseAfter": true
+    },
+    "rofl": {
+      "text": "笑死",
+      "pauseAfter": true
+    },
+    "xd": {
+      "text": "哈哈",
+      "pauseAfter": true
+    },
+    "sb": {
+      "text": "傻逼",
+      "pauseAfter": true
+    },
+    "sry": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "sr": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "sory": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "srry": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "srrry": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "sorry": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "soz": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "pardon": {
+      "text": "抱歉",
+      "pauseAfter": true
+    },
+    "pls": {
+      "text": "请",
+      "pauseAfter": false
+    },
+    "plz": {
+      "text": "请",
+      "pauseAfter": false
+    },
+    "please": {
+      "text": "请",
+      "pauseAfter": false
+    },
+    "ty": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "tyty": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "tysm": {
+      "text": "非常感谢",
+      "pauseAfter": true
+    },
+    "tyvm": {
+      "text": "非常感谢",
+      "pauseAfter": true
+    },
+    "thx": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "tnx": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "tks": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "tx": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "tq": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "thanks": {
+      "text": "谢谢",
+      "pauseAfter": true
+    },
+    "np": {
+      "text": "没事",
+      "pauseAfter": true
+    },
+    "nvm": {
+      "text": "没事",
+      "pauseAfter": true
+    },
+    "brb": {
+      "text": "马上回",
+      "pauseAfter": true
+    },
+    "afk": {
+      "text": "暂离",
+      "pauseAfter": true
+    },
+    "idk": {
+      "text": "我不知道",
+      "pauseAfter": true
+    },
+    "idc": {
+      "text": "无所谓",
+      "pauseAfter": true
+    },
+    "ikr": {
+      "text": "就是说",
+      "pauseAfter": true
+    },
+    "asap": {
+      "text": "尽快",
+      "pauseAfter": true
+    },
+    "gg": {
+      "text": "打得好",
+      "pauseAfter": true
+    },
+    "wp": {
+      "text": "打得好",
+      "pauseAfter": true
+    },
+    "gl": {
+      "text": "祝好运",
+      "pauseAfter": true
+    },
+    "hf": {
+      "text": "玩得开心",
+      "pauseAfter": true
+    },
+    "hi": {
+      "text": "你好",
+      "pauseAfter": true
+    },
+    "hello": {
+      "text": "你好",
+      "pauseAfter": true
+    },
+    "hey": {
+      "text": "嘿",
+      "pauseAfter": true
+    },
+    "yo": {
+      "text": "嘿",
+      "pauseAfter": true
+    },
+    "ow": {
+      "text": "嗷",
+      "pauseAfter": true
+    },
+    "sup": {
+      "text": "咋样",
+      "pauseAfter": true
+    },
+    "bye": {
+      "text": "再见",
+      "pauseAfter": true
+    },
+    "cya": {
+      "text": "再见",
+      "pauseAfter": true
+    },
+    "cu": {
+      "text": "再见",
+      "pauseAfter": true
+    },
+    "bb": {
+      "text": "再见",
+      "pauseAfter": true
+    },
+    "gn": {
+      "text": "晚安",
+      "pauseAfter": true
+    },
+    "gn8": {
+      "text": "晚安",
+      "pauseAfter": true
+    },
+    "gm": {
+      "text": "早安",
+      "pauseAfter": true
+    },
+    "bro": {
+      "text": "兄弟",
+      "pauseAfter": true
+    },
+    "bruh": {
+      "text": "兄弟",
+      "pauseAfter": true
+    },
+    "dude": {
+      "text": "老兄",
+      "pauseAfter": true
+    },
+    "mate": {
+      "text": "伙计",
+      "pauseAfter": true
+    },
+    "man": {
+      "text": "兄弟",
+      "pauseAfter": true
+    },
+    "k": {
+      "text": "好",
+      "pauseAfter": true
+    },
+    "kk": {
+      "text": "好",
+      "pauseAfter": true
+    },
+    "ok": {
+      "text": "好的",
+      "pauseAfter": true
+    },
+    "okay": {
+      "text": "好的",
+      "pauseAfter": true
+    },
+    "yes": {
+      "text": "是",
+      "pauseAfter": true
+    },
+    "y": {
+      "text": "是",
+      "pauseAfter": true
+    },
+    "no": {
+      "text": "不",
+      "pauseAfter": true
+    },
+    "n": {
+      "text": "不",
+      "pauseAfter": true
+    },
+    "wait": {
+      "text": "等一下",
+      "pauseAfter": true
+    },
+    "stop": {
+      "text": "停一下",
+      "pauseAfter": true
+    },
+    "go": {
+      "text": "走",
+      "pauseAfter": true
+    },
+    "slow": {
+      "text": "慢点",
+      "pauseAfter": true
+    },
+    "move": {
+      "text": "让一下",
+      "pauseAfter": true
+    },
+    "lag": {
+      "text": "卡顿",
+      "pauseAfter": true
+    },
+    "laggy": {
+      "text": "很卡",
+      "pauseAfter": true
+    },
+    "tamam": {
+      "text": "好的",
+      "pauseAfter": true
+    },
+    "neden": {
+      "text": "为什么",
+      "pauseAfter": true
+    },
+    "hayir": {
+      "text": "不",
+      "pauseAfter": true
+    },
+    "hayır": {
+      "text": "不",
+      "pauseAfter": true
+    },
+    "sa": {
+      "text": "你好",
+      "pauseAfter": true
+    },
+    "as": {
+      "text": "你好",
+      "pauseAfter": true
+    },
+    "gel": {
+      "text": "过来",
+      "pauseAfter": true
+    },
+    "var": {
+      "text": "有",
+      "pauseAfter": true
+    },
+    "varmi": {
+      "text": "有吗",
+      "pauseAfter": true
+    },
+    "varmı": {
+      "text": "有吗",
+      "pauseAfter": true
+    },
+    "dc": {
+      "text": "Discord",
+      "pauseAfter": true
+    },
+    "ds": {
+      "text": "Discord",
+      "pauseAfter": true
+    },
+    "crash": {
+      "text": "撞车",
+      "pauseAfter": true
+    },
+    "ram": {
+      "text": "撞人",
+      "pauseAfter": true
+    },
+    "rammer": {
+      "text": "撞人玩家",
+      "pauseAfter": true
+    },
+    "rec": {
+      "text": "已录屏",
+      "pauseAfter": true
+    },
+    "recording": {
+      "text": "已录屏",
+      "pauseAfter": true
+    },
+    "report": {
+      "text": "举报",
+      "pauseAfter": true
+    },
+    "rep": {
+      "text": "举报",
+      "pauseAfter": true
+    },
+    "ban": {
+      "text": "封禁",
+      "pauseAfter": true
+    },
+    "kick": {
+      "text": "踢出",
+      "pauseAfter": true
+    },
+    "fk": {
+      "text": "靠",
+      "pauseAfter": true
+    },
+    "fck": {
+      "text": "靠",
+      "pauseAfter": true
+    },
+    "fuck": {
+      "text": "操",
+      "pauseAfter": true
+    },
+    "shit": {
+      "text": "靠",
+      "pauseAfter": true
+    },
+    "damn": {
+      "text": "该死",
+      "pauseAfter": true
+    },
+    "stfu": {
+      "text": "闭嘴",
+      "pauseAfter": true
+    },
+    "fu": {
+      "text": "去你的",
+      "pauseAfter": true
+    },
+    "trash": {
+      "text": "垃圾",
+      "pauseAfter": false
+    },
+    "ez": {
+      "text": "太简单了",
+      "pauseAfter": true
+    },
+    "idiot": {
+      "text": "白痴",
+      "pauseAfter": false
+    },
+    "stupid": {
+      "text": "蠢货",
+      "pauseAfter": false
+    },
+    "noob": {
+      "text": "菜鸟",
+      "pauseAfter": false
+    },
+    "moron": {
+      "text": "蠢货",
+      "pauseAfter": false
+    },
+    "clown": {
+      "text": "小丑",
+      "pauseAfter": false
+    }
+  },
+  "phrases": {
+    "thank you": "谢谢",
+    "thank": "谢谢",
+    "good luck": "祝好运",
+    "have fun": "玩得开心",
+    "nice lag": "卡得真漂亮",
+    "stop horn": "别按喇叭",
+    "the player stop horn": "那个玩家别按喇叭",
+    "f7 at": "按 F7",
+    "dc varmi": "有 Discord 吗",
+    "dc varmı": "有 Discord 吗",
+    "wtf is this": "什么鬼，这是啥",
+    "what the fuck": "什么鬼",
+    "what the hell": "什么鬼",
+    "ahah": "哈哈",
+    "ahaha": "哈哈",
+    "ahahah": "哈哈",
+    "haha": "哈哈",
+    "hahaha": "哈哈",
+    "gute reise": "一路顺风",
+    "сам виноват": "是你自己的错",
+    "охренел": "疯了吗",
+    "идиот": "白痴",
+    "кидай дс": "发 Discord",
+    "кину запись": "我会发录像",
+    "ребят кто по дс": "谁用 Discord",
+    "поворотник включать надо": "该打转向灯",
+    "ездить научись сам": "你自己先学会开车",
+    "и ты мне говоришь научится ездить": "你还叫我学开车",
+    "ты поворот делал вопще с обочины": "你刚才是从路肩转弯的",
+    "пф": "哼",
+    "умник смотрю": "看来挺聪明啊",
+    "onune kırma olm": "别往我前面变道，兄弟",
+    "önüne kırma olum": "别往我前面变道，兄弟",
+    "araba 100 oldu hasareı": "车损到 100 了",
+    "yol vre la": "让路啊",
+    "yol ver la": "让路啊",
+    "o/": "挥手",
+    "o//": "挥手",
+    "0/": "挥手",
+    "0//": "挥手",
+    "\\o": "挥手",
+    "\\o/": "欢呼",
+    ":)": "微笑",
+    ":(": "难过",
+    ":d": "哈哈",
+    "<3": "爱心"
+  },
+  "structuredActions": {
+    "rec": "已录屏",
+    "recording": "已录屏",
+    "report": "举报",
+    "rep": "举报",
+    "ban": "封禁",
+    "kick": "踢出"
+  },
+  "systemMessages": [
+    {
+      "patterns": [
+        "cannot connect to server",
+        "can't connect to server",
+        "can not connect to server"
+      ],
+      "text": "无法连接到服务器，可能是网络连接问题。"
+    },
+    {
+      "patterns": [
+        "automatically reconnected",
+        "automaticly reconnected",
+        "reconnected within next",
+        "reconnect within next"
+      ],
+      "text": "将在接下来的几秒内自动重新连接。"
+    },
+    {
+      "patterns": [
+        "connection established",
+        "connected to server"
+      ],
+      "text": "已连接到服务器。"
+    },
+    {
+      "patterns": [
+        "connection refused",
+        "connection timed out"
+      ],
+      "text": "连接失败，请检查网络或稍后重试。"
+    }
+  ],
+  "ets2Terms": {
+    "truck": "卡车",
+    "trailer": "挂车",
+    "cargo": "货物",
+    "job": "任务",
+    "delivery": "任务",
+    "convoy": "车队",
+    "route": "路线",
+    "destination": "目的地",
+    "garage": "车库",
+    "rest stop": "休息区",
+    "parking": "休息区",
+    "gas station": "加油站",
+    "repair shop": "维修站",
+    "service": "维修站",
+    "ferry": "渡轮",
+    "tunnel": "隧道",
+    "toll gate": "收费站",
+    "bridge": "桥",
+    "highway": "高速公路",
+    "motorway": "高速公路",
+    "lane": "车道",
+    "speed limit": "限速",
+    "police": "警察",
+    "cop": "警察",
+    "fine": "罚款",
+    "ticket": "罚款",
+    "headlights": "车灯",
+    "engine": "发动机",
+    "damage": "损坏",
+    "overtake": "超车",
+    "fuel": "油/柴油",
+    "diesel": "油/柴油",
+    "km/h": "公里/小时",
+    "collision": "碰撞",
+    "no collision": "无碰撞区",
+    "nc": "无碰撞区",
+    "ping": "延迟",
+    "Scandinavia": "斯堪的纳维亚",
+    "Calais": "加来",
+    "Duisburg": "杜伊斯堡",
+    "Kirkenes": "希尔克内斯",
+    "Rotterdam": "鹿特丹",
+    "Dover": "多佛",
+    "server": "服务器",
+    "admin": "管理员",
+    "mod": "模组",
+    "disconnect": "掉线",
+    "reconnect": "重连",
+    "rc": "重连",
+    "save": "存档",
+    "load": "读档",
+    "World of Trucks": "卡车世界"
+  },
+  "promptMapping": "sry=抱歉, ty/thx=谢谢, rec=已录屏, wtf=什么鬼"
+}

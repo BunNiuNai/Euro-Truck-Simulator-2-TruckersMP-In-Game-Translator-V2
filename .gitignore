@@ -1,0 +1,18 @@
+# 构建产物
+backend/translator
+backend/translator.exe
+native/build/
+build/
+dist/
+frontend/node_modules/
+frontend/dist/
+
+# Go 构建缓存（默认在 %LOCALAPPDATA%\go-build；沙箱环境用工作区内缓存）
+.gocache/
+
+# 基线测量的产物（勿提交；结果记录在 tools/baseline/RESULTS-v1.md）
+tools/baseline/out/
+
+# 运行期数据（真实配置在 文档\ETS2 Translator\，不在此目录）
+.tmpdata/
+*.log

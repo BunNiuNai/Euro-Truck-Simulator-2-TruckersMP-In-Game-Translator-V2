@@ -1,0 +1,131 @@
+/*
+ * 设计 token —— 全应用唯一的颜色与尺寸来源。
+ *
+ * ══ 设计体系：Windows 11 Fluent ══════════════════════════════
+ * 命名与数值对齐 WinUI 3 的 Fluent 设计系统（layer / stroke / text 三级层次），
+ * 这样观感与系统自带应用一致，而不是自创一套。
+ *
+ * ══ 与 V1 的关系 ═════════════════════════════════════════════
+ * V1 有两套互不相干的配色（悬浮窗的纯黑+三层蓝+金色译文 vs 设置页的 VS Code
+ * 深色），而配置项 accent_color 从来没有被任何代码读过——缺陷 D1。
+ * V2 统一为一套 token 并补齐浅色主题，属于「有意修复已记录缺陷」。
+ *
+ * 但**消息语义色必须保留**：译文金、玩家名蓝、自己绿、错误红是信息载体
+ * （读者靠颜色区分消息类型），不是装饰。浅色主题下它们被压深以保证对比度。
+ *
+ * ══ 为什么底色是半透明的 ═════════════════════════════════════
+ * native 层已经给窗口应用了 Mica/Acrylic 材质（真机验证生效）。若 CSS 用
+ * 不透明纯黑，就会把材质**完全盖住**，applyBlur 等于白做。
+ * 所以底色带 alpha，让材质透出来——这也正是 Win11 Acrylic 窗口的做法。
+ *
+ * alpha 值由配置的 window_opacity 驱动。V1 用 Win32 的 -alpha 实现透明度，
+ * 其注释里提到会有拖影；CSS 透明度没有这个问题。
+ */
+
+:root {
+  /* ── 圆角（Win11 的固定档位）── */
+  --radius-window: 8px;
+  --radius-card: 8px;
+  --radius-control: 4px;
+  --radius-small: 2px;
+
+  /* ── 字体 ── */
+  --font-ui: 'Segoe UI Variable Text', 'Segoe UI', 'Microsoft YaHei UI', 'Microsoft YaHei',
+    system-ui, sans-serif;
+  --font-mono: 'Cascadia Mono', Consolas, 'Courier New', monospace;
+
+  /* ── 尺寸 ── */
+  /* 必须与 native/src/window.cpp 的 kCaptionHeight 一致：
+     这条标题带由原生接管拖拽，里面的控件收不到鼠标事件。 */
+  --caption-height: 32px;
+
+  /* 底色不透明度，由配置的 window_opacity 注入（见 useTheme.ts） */
+  --window-alpha: 0.85;
+
+  /* ── 动效（Fluent motion）── */
+  --motion-fast: 120ms cubic-bezier(0, 0, 0, 1);
+  --motion-normal: 200ms cubic-bezier(0, 0, 0, 1);
+}
+
+/* ══ Win11 深色（默认）══════════════════════════════════════ */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --accent: #60cdff;
+  --accent-hover: #7ad4ff;
+  --accent-pressed: #4ab8e8;
+  --accent-on: #000000; /* 强调色之上的文字色 */
+
+  --layer-solid: #202020; /* 无材质时的兜底实色 */
+  --layer-bg: rgba(32, 32, 32, var(--window-alpha));
+  --layer-card: rgba(255, 255, 255, 0.0512);
+  --layer-card-hover: rgba(255, 255, 255, 0.0837);
+  --layer-control: rgba(255, 255, 255, 0.0605);
+  --layer-control-hover: rgba(255, 255, 255, 0.0837);
+  --layer-control-pressed: rgba(255, 255, 255, 0.0326);
+  --layer-flyout: #2c2c2c; /* 浮出层用实色，避免与下方内容糊在一起 */
+
+  --stroke: rgba(255, 255, 255, 0.0698);
+  --stroke-strong: rgba(255, 255, 255, 0.12);
+
+  --text: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.786);
+  --text-tertiary: rgba(255, 255, 255, 0.544);
+  --text-disabled: rgba(255, 255, 255, 0.363);
+
+  /* 状态色（Win11 系统调色板） */
+  --warn: #fce100;
+  --ok: #6ccb5f;
+
+  /* 消息语义色：直接继承 V1 的取值（V1 本来就是深色底，取值已经合适） */
+  --msg-translation: #ffd700; /* 译文金（V1 TRANSL） */
+  --msg-player: #70b8ff; /* 玩家名高亮蓝（V1 HIGHLIGHT） */
+  --msg-self: #4ec9b0; /* 自己的消息（V1 SELF_GREEN） */
+  --msg-error: #ff99a4; /* 错误文案 */
+  --msg-system: rgba(255, 255, 255, 0.544);
+  --msg-timestamp: rgba(255, 255, 255, 0.363);
+  --msg-rule: rgba(255, 255, 255, 0.12);
+}
+
+/* ══ Win11 浅色 ════════════════════════════════════════════ */
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --accent: #005fb8;
+  --accent-hover: #1a6fbf;
+  --accent-pressed: #003e7a;
+  --accent-on: #ffffff;
+
+  --layer-solid: #f3f3f3;
+  --layer-bg: rgba(243, 243, 243, var(--window-alpha));
+  --layer-card: rgba(255, 255, 255, 0.7);
+  --layer-card-hover: rgba(255, 255, 255, 0.9);
+  --layer-control: rgba(255, 255, 255, 0.7);
+  --layer-control-hover: rgba(249, 249, 249, 0.6);
+  --layer-control-pressed: rgba(249, 249, 249, 0.4);
+  --layer-flyout: #f9f9f9;
+
+  --stroke: rgba(0, 0, 0, 0.0578);
+  --stroke-strong: rgba(0, 0, 0, 0.12);
+
+  --text: #1a1a1a;
+  --text-secondary: rgba(0, 0, 0, 0.6063);
+  --text-tertiary: rgba(0, 0, 0, 0.4458);
+  --text-disabled: rgba(0, 0, 0, 0.3614);
+
+  /* 浅色底上的状态色也要压深 */
+  --warn: #9d5d00;
+  --ok: #0f7b0f;
+
+  /* 浅色底上必须压深：V1 的金 #ffd700 放在白底上几乎看不见 */
+  --msg-translation: #8a6400;
+  --msg-player: #0a5ea8;
+  --msg-self: #0f7b6c;
+  --msg-error: #c42b1c; /* Win11 的标准错误红 */
+  --msg-system: rgba(0, 0, 0, 0.6063);
+  --msg-timestamp: rgba(0, 0, 0, 0.4458);
+  --msg-rule: rgba(0, 0, 0, 0.1);
+}
