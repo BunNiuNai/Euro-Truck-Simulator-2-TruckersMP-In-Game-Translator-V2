@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Translator V2 前端 SPA — 由 native 宿主 WebView2，经 REST + WS 与 Go 通信（ADR-013）",
+  "description": "Translator V2 前端 SPA — 由 native 宿主 WebView2，经 REST + SSE 与 Go 通信（ADR-016）",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",

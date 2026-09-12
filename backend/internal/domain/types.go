@@ -57,7 +57,22 @@ type RenderedMessage struct {
 	Provider string `json:"provider"`
 	Model    string `json:"model"`
 
-	// CacheState 取值："local_dict" | "hit" | "miss"
+	// CacheState 说明这条消息**走了哪条路**（由 engine 设置，前端据它决定显示什么）。
+	// 全部取值（engine.go / batch.go）：
+	//
+	//	skip_empty    原文为空
+	//	all_target    已全是目标语言
+	//	skip_nontext  非文字内容（纯标点/数字/emoji）
+	//	skip_target   已是目标语言，跳过
+	//	self_skip     自己的消息，不翻译
+	//	mixed         混合语言，走了拆分
+	//	local_dict    本地词典命中（零 API）
+	//	hit           缓存命中（零 API）
+	//	llm           真实调用过 LLM
+	//	error         出错（**不写缓存**，见 D14）
+	//	fallback      批量拆分失败后逐条回退（**要写缓存**，所以不叫 error）
+	//
+	// ⚠️ 此前这里只写了 "local_dict" | "hit" | "miss"，其中 "miss" 根本不存在。
 	CacheState string `json:"cacheState"`
 
 	LatencyMs int `json:"latencyMs"`
